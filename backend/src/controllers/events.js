@@ -21,11 +21,12 @@ exports.list = async (ctx) => {
 exports.create = async (ctx) => {
   const { body } = ctx.request;
 
-  const { temperature, humidity } = body;
+  const { temperature, humidity, sensor_id } = body;
 
   const event = await database.Event.create({
     temperature,
     humidity,
+    sensor_id
   });
 
   ctx.body = event;
