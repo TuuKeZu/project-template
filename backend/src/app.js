@@ -36,7 +36,7 @@ publicRouter.post('/chats', chats.create);
 publicRouter.get('/chats', chats.list);
 
 publicRouter.post('/events', events.create);
-publicRouter.get('/events', events.list);
+publicRouter.get('/events/:sensor_id', events.list);
 
 publicRouter.get('/greeting', greeting.greet);
 
