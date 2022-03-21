@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom';
+import Button from '@mui/material/Button';
+import {FormControl, InputLabel, Select, MenuItem} from '@mui/material';
+
 
 import './assets/stylesheets/style.css';
 
@@ -21,15 +24,41 @@ const getGreetingFromBackend = async () => {
   return { greeting: 'Could not get greeting from backend' };
 };
 
-const BackendGreeting = (props) => (
+
+const BackendGreeting = (props) => {
+  
+  const [age, setAge] = useState(0);
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  }
+
+  return (
   <div>
+    <Button variant='contained'>Hello World</Button>
+
+    <FormControl fullWidth>
+      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <Select
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={age}
+      label="Age"
+      onChange={handleChange}
+      >
+      <MenuItem value={10}>Ten</MenuItem>
+      <MenuItem value={20}>Twenty</MenuItem>
+      <MenuItem value={30}>Thirty</MenuItem>
+    </Select>
+  </FormControl>
     <p>
       Backend says:
       {' '}
       {props.greeting}
     </p>
   </div>
-);
+);}
+
 
 class App extends Component {
   constructor(props) {
