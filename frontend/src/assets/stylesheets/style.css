@@ -1,6 +1,36 @@
+:root{
+  --gray: rgb(139, 139, 139);
+}
+
 html, body {
   margin: 0;
   height: 100%;
+}
+
+
+@font-face {
+  font-family: 'regular';
+  src: url(../fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'thin';
+  src: url(../fonts/Roboto-Thin.ttf);
+}
+
+h1{
+  font-size: 50px;
+  margin: 20px;
+  font-family: 'regular';
+}
+
+h2{
+  font-family: 'thin';
+  font-size: 30px;
+  margin: 20px;
+  padding-left: 15px;
+  color: var(--gray);
+  border-left: solid 2px var(--gray);
 }
 
 #root {
@@ -9,6 +39,8 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+
+
 
 .chart {
   position: relative;
