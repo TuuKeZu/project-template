@@ -7,6 +7,7 @@ const cors = require('kcors');
 const chats = require('./controllers/chats');
 const greeting = require('./controllers/greeting');
 const events = require('./controllers/events');
+const requests = require('./controllers/requests');
 
 // Create a new Koa instance for our API
 const app = new Koa();
@@ -42,6 +43,7 @@ publicRouter.get('/events/sensors', events.listSensors);
 publicRouter.get('/events/:id', events.setSensorQueryByEventID, events.list);
 
 publicRouter.get('/greeting', greeting.greet);
+publicRouter.get('/ruokalista', requests.getRuokaLista);
 
 // Add the router middleware to the Koa instance
 app.use(publicRouter.routes());

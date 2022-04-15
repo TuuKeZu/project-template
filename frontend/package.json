@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "lint": "eslint --ext .js --ext .jsx ."
+    "lint": "eslint --ext .js --ext .jsx .",
+    "build": "webpack --config webpack.config.js"
   },
   "devDependencies": {
     "eslint": "^8.10.0",

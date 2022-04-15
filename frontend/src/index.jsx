@@ -14,6 +14,7 @@ const baseUrl = window.location.hostname;
 // const backendUrl = `http://${baseUrl}:${BACKEND_PORT}`;
 const backendUrl = `http://localhost:9000`;
 
+
 // options for a chart
 const options = {
   maintainAspectRatio: false,
@@ -64,10 +65,49 @@ const getSensors = async () => {
   );
 }
 
+const getRuokalista = async () => {
+  const res = await fetch(`${backendUrl}/api/ruokalista`);
+  const { LunchMenus } = await res.json();
+
+  const result = [];
+
+  LunchMenus.forEach((lunchDay, index) => {
+    const day = lunchDay.DayOfWeek;
+    const menus = lunchDay.SetMenus.filter(meal => meal.Name == 'Otaniemen lukion lounas');
+    const menusVege = lunchDay.SetMenus.filter(meal => meal.Name == 'Otaniemen lukion kasvislounas');
+
+    const meals = [];
+    const mealsVege = [];
+
+    menus.forEach(menu => {
+      menu.Meals.forEach(meal => {
+        meals.push(meal);
+      });
+    });
+
+    menusVege.forEach(menu => {
+      menu.Meals.forEach(meal => {
+        mealsVege.push(meal);
+      });
+    });
+
+    
+    result.push(
+    <div key={index}>
+      <h4>{day}</h4>
+      <div><h5>Lounas</h5> { meals.map(meal => <h6>{meal.Name}</h6> ) }</div>
+      <div><h5>Kasvislounas</h5>{ mealsVege.map(meal => <h6>{meal.Name}</h6> ) }</div>
+    </div>)
+  });
+
+  return result;
+}
+
 const App = () => {
   const [data, setData] = useState();
   const [sensorElementList, setSensorList] = useState([]);
   const [sensor, setSensor] = useState(0);
+  const [ruokaLista, setRuokaLista] = useState(0);
 
   const handleChange = async (event) => {
     setSensor(event.target.value);
@@ -85,6 +125,9 @@ const App = () => {
     const sensorData = await getSensors();
     setSensorList(sensorData);
 
+    const ruokaListaData = await getRuokalista();
+    console.log(ruokaListaData);
+    setRuokaLista(ruokaListaData);
 
     const chartData = await getData(sensorList[0]);
     // ...and store it for later use
@@ -98,23 +141,28 @@ const App = () => {
 
 
   return (
-    <div className='chart'>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Sensor</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={sensor}
-            label="Sensor"
-            onChange={handleChange}
-          >
-          
-          { sensorElementList }
-        </Select>
-      </FormControl>
-      <Line data={data} opotions={options} />
-      <Button onClick={() => handleRefresh()}>Refresh</Button>
-    </div>
+    [
+      <div className='chart'>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Sensor</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={sensor}
+              label="Sensor"
+              onChange={handleChange}
+            >
+            
+            { sensorElementList }
+          </Select>
+        </FormControl>
+        <Line data={data} opotions={options} />
+        <Button onClick={() => handleRefresh()}>Refresh</Button>
+      </div>,
+      <div className='menu'>
+        { ruokaLista }
+      </div>
+    ]
   );
 }
 

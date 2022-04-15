@@ -59,7 +59,6 @@ module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
         
-        
     } else {
         config.mode = 'development';
     }

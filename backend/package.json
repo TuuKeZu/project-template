@@ -25,6 +25,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.1.1",
     "pg": "^8.7.3",
+    "request": "^2.88.2",
     "sequelize": "^6.17.0",
     "sqlite3": "^5.0.2"
   },
